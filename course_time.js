@@ -57,9 +57,23 @@ hour_sum += Math.floor(min_sum/60);
 min_sum = min_sum%60;
 
 var result = hour_sum + " hour " + min_sum + " min " + sec_sum + " sec";
-
-$node.text($node.text() + " ( " + result + " )");
-// TODO: this will also overwrite the "span" entity. However, we should keep the "span" entity intact.
-
 // console.log(result);
+
+
+/*
+ https://api.jquery.com/contents/
+   > The .contents() and .children() methods are similar, except that the former includes text nodes as well as HTML elements in the resulting jQuery object.
+
+ https://developer.mozilla.org/en-US/docs/Web/API/Node.nodeType
+   > The read-only `Node.nodeType` property returns an unsigned short integer representing the type of the node.
+   > This DOM property holds a numeric code indicating the node's type; text nodes use the code 3.
+*/
+
+$target = $("h3:contains('Week " + "1" + "')").contents().filter(function() {
+      return this.nodeType === 3;
+    });
+
+// https://stackoverflow.com/questions/9956388/how-to-change-only-text-node-in-element
+// https://api.jquery.com/replaceWith/
+$target.replaceWith($target.text() + " ( " + result + " )");
 

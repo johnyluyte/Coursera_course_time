@@ -27,7 +27,7 @@ function calculate(i){
         The data.table Package (11:18)"
     */
 
-    var timeArray = str.match(/(\d*:\d*)/g)
+    var timeArray = str.match(/\(\d*:\d*\)/g);
 
     /*
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match
@@ -42,13 +42,13 @@ function calculate(i){
     var min_sum = 0;
     var sec_sum = 0;
 
-    var minArray = str.match(/\d*:/g);
+    var minArray = timeString.match(/\d*:/g);
     for(var x in minArray){
         var tmp = minArray[x].substring(0,minArray[x].length-1);
         min_sum += parseInt(tmp);
         // console.log(tmp);
     }
-    var secArray = str.match(/:\d*/g);
+    var secArray = timeString.match(/:\d*/g);
     for(var x in secArray){
         var tmp = secArray[x].substring(1,secArray[x].length);
         sec_sum += parseInt(tmp);

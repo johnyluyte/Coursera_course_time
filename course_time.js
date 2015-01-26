@@ -13,15 +13,11 @@ function calculate(i){
     /*
     str should be something like this:
 
-        "Obtaining Data Motivation (5:38)
-        Raw and Processed Data (7:07)
-        Components of Tidy Data (9:25)
-        Downloading Files (7:09)
-        Reading Local Files (4:55)
-        Reading Excel Files (3:55)
-        Reading XML (12:39)
-        Reading JSON (5:03)
-        The data.table Package (11:18)"
+        "Intro to Design (12:08)
+        Design Methodologies (15:32)
+        Case Study: SSL Warnings - example user (7:34)
+        Case Study: SSL Warnings - paper discussion (15:20)
+        Interview: SSL Warnings (4:49)"
     */
 
     var timeArray = str.match(/\(\d*:\d*\)/g);
@@ -30,7 +26,7 @@ function calculate(i){
     https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match
 
     timeArray should be something like this:
-        ["5:38", "7:07", "9:25", "7:09", "4:55", "3:55", "12:39", "5:03", "11:18"]
+        ["(12:08)", "(15:32)", "(7:34)", "(15:20)", "(4:49)"]
     */
 
     var timeString = timeArray.toString();
@@ -53,7 +49,7 @@ function calculate(i){
     }
 
     // console.log(min_sum + ":" + sec_sum);
-    // [63:249]
+    // [53:143]
 
 
     min_sum += Math.floor(sec_sum/60);

@@ -1,12 +1,9 @@
 
 // TODO: 用在 grease monkey 上面!?
 
-
-// TODO: Should be able to automatically detect how many weeks are there.
-var WEEK_START = 1;
-var WEEK_END = 4;
-
-for(var i=WEEK_START; i<=WEEK_END; i++){
+// How many "Week" are there?
+var weekCount = $("h3:contains('Week ')").length;
+for(var i=1; i<=weekCount; i++){
     calculate(i);
 }
 

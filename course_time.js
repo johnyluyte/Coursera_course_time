@@ -2,14 +2,13 @@
 // TODO: 用在 grease monkey 上面!?
 
 // How many "Week" are there?
-var weekCount = $("h3:contains('Week ')").length;
-for(var i=1; i<=weekCount; i++){
-    calculate(i);
+var $headerNodes = $(".course-item-list-header");
+for(var i=0; i<$headerNodes.length; i++){
+    calculate($headerNodes.eq(i));
 }
 
-function calculate(i){
-    var $node = $("h3:contains('Week " + i + "')");
-    var str = $node.parent().next().children().children("a").text();
+function calculate($node){
+    var str = $node.next().children().children("a").text();
     /*
     str should be something like this:
 
@@ -55,7 +54,6 @@ function calculate(i){
     min_sum += Math.floor(sec_sum/60);
     sec_sum = sec_sum%60;
 
-
     hour_sum += Math.floor(min_sum/60);
     min_sum = min_sum%60;
 
@@ -76,7 +74,7 @@ function calculate(i){
        > This DOM property holds a numeric code indicating the node's type; text nodes use the code 3.
     */
 
-    $target = $("h3:contains('Week " + i + "')").contents().filter(function() {
+    $target = $node.children("h3").contents().filter(function() {
           return this.nodeType === 3;
         });
 

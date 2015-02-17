@@ -4,10 +4,92 @@
 // How many "Week" are there?
 var $headerNodes = $(".course-item-list-header");
 for(var i=0; i<$headerNodes.length; i++){
-    calculate($headerNodes.eq(i));
+    calculateTotal($headerNodes.eq(i));
+    calculateUnviewed($headerNodes.eq(i));
 }
 
-function calculate($node){
+function calculateUnviewed($node){
+    var str = $node.next().children(".unviewed").children("a").text();
+    /*
+    str should be something like this:
+
+        "Intro to Design (12:08)
+        Design Methodologies (15:32)
+        Case Study: SSL Warnings - example user (7:34)
+        Case Study: SSL Warnings - paper discussion (15:20)
+        Interview: SSL Warnings (4:49)"
+    */
+
+    var timeArray = str.match(/\(\d*:\d*\)/g);
+
+    /*
+    https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match
+
+    timeArray should be something like this:
+        ["(12:08)", "(15:32)", "(7:34)", "(15:20)", "(4:49)"]
+    */
+
+    var timeString;
+    var hour_sum = 0;
+    var min_sum = 0;
+    var sec_sum = 0;
+
+    if(timeArray != null){
+      timeString = timeArray.toString();
+      var minArray = timeString.match(/\d*:/g);
+      for(var x in minArray){
+          var tmp = minArray[x].substring(0,minArray[x].length-1);
+          min_sum += parseInt(tmp);
+          // console.log(tmp);
+      }
+      var secArray = timeString.match(/:\d*/g);
+      for(var x in secArray){
+          var tmp = secArray[x].substring(1,secArray[x].length);
+          sec_sum += parseInt(tmp);
+          // console.log(tmp);
+      }
+    }
+
+    // console.log(min_sum + ":" + sec_sum);
+    // [53:143]
+
+
+    min_sum += Math.floor(sec_sum/60);
+    sec_sum = sec_sum%60;
+
+    hour_sum += Math.floor(min_sum/60);
+    min_sum = min_sum%60;
+
+    var result = "Unviewed: ";
+    if(hour_sum !== 0){
+        result += hour_sum + " hour ";
+    }
+    result += min_sum + " min " + sec_sum + " sec";
+    // console.log(result);
+
+
+    /*
+     https://api.jquery.com/contents/
+       > The .contents() and .children() methods are similar, except that the former includes text nodes as well as     HTML elements in the resulting jQuery object.
+
+     https://developer.mozilla.org/en-US/docs/Web/API/Node.nodeType
+       > The read-only `Node.nodeType` property returns an unsigned short integer representing the type of the node.
+       > This DOM property holds a numeric code indicating the node's type; text nodes use the code 3.
+    */
+
+    $target = $node.children("h3").contents().filter(function() {
+          return this.nodeType === 3;
+        });
+
+    // https://stackoverflow.com/questions/9956388/how-to-change-only-text-node-in-element
+    // https://api.jquery.com/replaceWith/
+    $target.replaceWith($target.text() + " ( " + result + " )");
+}
+
+
+
+
+function calculateTotal($node){
     var str = $node.next().children().children("a").text();
     /*
     str should be something like this:
@@ -57,7 +139,7 @@ function calculate($node){
     hour_sum += Math.floor(min_sum/60);
     min_sum = min_sum%60;
 
-    var result = "";
+    var result = "Total: ";
     if(hour_sum !== 0){
         result += hour_sum + " hour ";
     }

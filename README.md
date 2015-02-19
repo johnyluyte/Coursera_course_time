@@ -5,6 +5,7 @@
 - Code refactoring
 - Change `1 Hour 2 Min 3 Sec` to `1:02:03`
 - Add try exception area
+- After watching a video, the remaining time did not update. Should automatically update or add a button.
 
 ## License
 
